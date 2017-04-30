@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>折纸demo</title>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	body{background: rgba(0,0,0,0.3);}
+	.box{margin: 100px auto;width:200px;height: 40px;text-align: center;perspective:800px;}
+	h3{line-height: 40px;background:black;color: white;position: relative;z-index: 20;}
+	.box div{height: 30px;margin-top: 2px;transform-style:preserve-3d;
+		transform-origin:center -2px;transform:rotateX(-90deg);background: #555;}
+	span{display: block;line-height: 30px;font-size:10px;}
+
+	.box div.show{animation:2s show;transform:rotateX(0deg);}
+	.box div.show>span{background: white;transition:1s;}
+	.box div.hide{animation:1s hide;transform:rotateX(-90deg);}
+	.box div.hide>span{background: #555;transition:0.5s;}
+	.box div span:hover{background: #888;}
+	.box div span.close:hover{background: #052;}
+	@keyframes show{
+		0%{
+			transform:rotateX(-90deg);
+		}
+		50%{
+			transform:rotateX(30deg);
+		}
+		75%{
+			transform:rotateX(-20deg);
+		}
+		90%{
+			transform:rotateX(10deg);
+		}
+		100%{
+			transform:rotateX(0deg);
+		}
+	}
+	@keyframes hide{
+		0%{
+			transform:rotateX(0deg);
+		}
+		100%{
+			transform:rotateX(-90deg);
+		}
+	}
+
+</style>
+</head>
+<body>
+<div class="box">
+	<h3>经典日漫</h3>
+	<!-- <div>
+		<span>樱花庄的宠物女孩</span>
+		<div>
+			<span>灼眼的夏娜</span>
+			<div>
+				<span>龙与虎</span>
+				<div>
+					<span>罪恶王冠</span>
+					<div>
+						<span>人形电脑天使心</span>
+						<div>
+							<span>濒危物种少女</span>
+							<div>
+								<span>air</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+
+<script type="text/javascript">
+	var spans=document.getElementsByTagName('span');
+	var box=document.getElementsByClassName('box')[0];
+	var arr=['樱花庄的宠物女孩','灼眼的夏娜','龙与虎','罪恶王冠','人形电脑天使心','濒危物种少女','air','sola','夕阳染红的街道','我的青春恋爱物语果然有问题'];
+	var str='<div><span class="close">收起</span></div>';
+	for(var i=0;i<arr.length;i++){
+		str = '<div><span><a href="javascript:;">'+arr[arr.length-1-i]+'</a></span>'+str+'</div>';
+	}
+	box.innerHTML='<h3>经典日漫</h3>'+str;
+
+	var oDivs=box.getElementsByTagName('div');
+	var h3=document.getElementsByTagName('h3')[0];
+	h3.offbtn=true;
+	var num=0;
+	var timer=null,timer2=null;
+	
+	box.onclick=function(){
+		change();
+	};
+	for(var i=0;i<spans.length-1;i++){
+		spans[i].onclick=function(ev){
+			var ev=ev||window.event;
+			ev.stopPropagation();
+			return false;
+		}
+	}
+	change();
+	function change(){
+		if(timer||timer2) return false;
+		if(h3.offbtn){
+			h3.offbtn=false;
+			timer=setInterval(function(){
+				oDivs[num].className='show';
+				num++;
+				if(num==oDivs.length){
+					num--;
+					clearInterval(timer);
+					timer=null;
+				}
+			},100)		
+		}else{
+			h3.offbtn=true;
+			clearInterval(timer);
+			timer2=setInterval(function(){
+				oDivs[num].className='hide';
+				num--;
+				if(num==-1){
+					num=0;
+					clearInterval(timer2);
+					timer2=null;
+				};
+			},100)
+		}
+	}
+</script>
+</body>
+</html>
