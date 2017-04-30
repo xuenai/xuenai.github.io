@@ -11,7 +11,7 @@
 	.box div{height: 30px;margin-top: 2px;transform-style:preserve-3d;
 		transform-origin:center -2px;transform:rotateX(-90deg);background: #555;}
 	span{display: block;line-height: 30px;font-size:10px;}
-
+	input{width:200px;height: 30px;outline: none;border: none;text-align: center;}
 	.box div.show{animation:2s show;transform:rotateX(0deg);}
 	.box div.show>span{background: white;transition:1s;}
 	.box div.hide{animation:1s hide;transform:rotateX(-90deg);}
@@ -74,9 +74,10 @@
 
 <script type="text/javascript">
 	var spans=document.getElementsByTagName('span');
+	var Aas=document.getElementsByTagName('a');
 	var box=document.getElementsByClassName('box')[0];
 	var arr=['樱花庄的宠物女孩','灼眼的夏娜','龙与虎','罪恶王冠','人形电脑天使心','濒危物种少女','air','sola','夕阳染红的街道','我的青春恋爱物语果然有问题'];
-	var str='<div><span class="close">收起</span></div>';
+	var str='<div><span><input class="search" type="text" value="请输入您想搜索的日漫,再回车" /></span><div><span class="close">收起</span></div></div>';
 	for(var i=0;i<arr.length;i++){
 		str = '<div><span><a href="javascript:;">'+arr[arr.length-1-i]+'</a></span>'+str+'</div>';
 	}
@@ -91,6 +92,12 @@
 	box.onclick=function(){
 		change();
 	};
+	for(var i=0;i<Aas.length;i++){
+		Aas[i].onclick=function(){
+			var str='http://www.baidu.com/s?wd='+this.innerHTML;
+			window.open(str,'_blank');
+		}
+	}
 	for(var i=0;i<spans.length-1;i++){
 		spans[i].onclick=function(ev){
 			var ev=ev||window.event;
@@ -124,6 +131,30 @@
 					timer2=null;
 				};
 			},100)
+		}
+	}
+
+	var search=document.getElementsByClassName('search')[0];
+    search.onclick=function(){
+    	if(search.value=="请输入您想搜索的日漫,再回车"){
+			search.value='';
+		}
+    }
+    search.onblur=function(){
+    	if(search.value==""){
+			search.value="请输入您想搜索的日漫,再回车";
+		}
+    }
+    document.body.onkeydown=function(){
+    	if(window.event.keyCode==13){
+    		get();
+    	}
+    }
+	function get(){
+		if(search.value=="请输入您想搜索的日漫,再回车"||search.value==""){
+			return false;
+		}else{
+			window.open('https://www.baidu.com/s?wd='+search.value,'_blank');
 		}
 	}
 </script>
