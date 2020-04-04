@@ -1,2 +1,1 @@
-# xuenai.github.io
-个人博客
+入行自学写的小demo
